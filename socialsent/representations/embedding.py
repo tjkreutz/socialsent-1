@@ -69,7 +69,7 @@ class Embedding:
         if w in self.wi:
             return self.m[self.wi[w], :]
         else:
-            print "OOV: ", w
+            print("OOV: ", w)
             return np.zeros(self.dim)
 
     def similarity(self, w1, w2):
@@ -122,7 +122,7 @@ class GigaEmbedding(Embedding):
             w = split[0]
             if w in words:
                 seen.append(w)
-                vs[w] = np.array(map(float, split[1:]), dtype='float32')
+                vs[w] = np.array(list(map(float, split[1:])), dtype='float32')
         self.iw = seen
         self.wi = {w:i for i,w in enumerate(self.iw)}
         self.m = np.vstack(vs[w] for w in self.iw)

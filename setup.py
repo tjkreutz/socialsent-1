@@ -7,10 +7,11 @@ setup(name='socialsent',
       author='William Hamilton',
       author_email='wleif@stanford.edu',
       license='Apache Version 2',
-      packages=['socialsent'],
+      packages=['socialsent', 'socialsent.representations'],
       install_requires = ['numpy',
-                          'keras==0.3',
+                          'keras',
                           'sklearn',
                           'theano'],
+
       package_data= {'socialsent' : ['data/lexicons/*.json']},
       zip_safe=False)

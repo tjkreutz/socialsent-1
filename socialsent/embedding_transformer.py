@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from itertools import combinations, product
 from keras import backend as K
-from keras.models import Graph
+from keras import Sequential
 from keras.layers.core import Dense, Lambda
 from keras.optimizers import Adam, Optimizer
 from keras.regularizers import Regularizer
@@ -61,7 +61,7 @@ class SimpleSGD(Optimizer):
 
 class Orthogonal(Constraint):
     def __call__(self, p):
-        print "here"
+        print("here")
         u,s,v = T.nlinalg.svd(p)
         return K.dot(u,K.transpose(v))
 
@@ -126,7 +126,7 @@ def get_model(inputdim, outputdim, regularization_strength=0.01, lr=0.000, cosin
     transformation = Dense(inputdim, init='identity',
                            W_constraint=Orthogonal())
 
-    model = Graph()
+    model = Sequential()
     model.add_input(name='embeddings1', input_shape=(inputdim,))
     model.add_input(name='embeddings2', input_shape=(inputdim,))
     model.add_shared_node(transformation, name='transformation',
@@ -155,11 +155,11 @@ def apply_embedding_transformation(embeddings, positive_seeds, negative_seeds,
                                    n_epochs=5, n_dim=10, force_orthogonal=False,
                                    plot=False, plot_points=50, plot_seeds=False,
                                    **kwargs):
-    print "Preparing to learn embedding tranformation"
+    print("Preparing to learn embedding tranformation")
     dataset = DatasetMinibatchIterator(embeddings, positive_seeds, negative_seeds, **kwargs)
     model = get_model(embeddings.m.shape[1], n_dim, **kwargs)
 
-    print "Learning embedding transformation"
+    print("Learning embedding transformation")
 #    prog = util.Progbar(n_epochs)
     for epoch in range(n_epochs):
         dataset.shuffle()
